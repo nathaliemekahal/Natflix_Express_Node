@@ -16,7 +16,7 @@ class Details extends Component {
         console.log('mounted')
         let id=this.props.match.params.id
         console.log('id',id)
-        fetch('http://localhost:3002/media/'+id)
+        fetch('https://natflix-be.herokuapp.com/media/'+id)
         .then((response)=>response.json())
         .then((responseJson)=> this.setState({movie:responseJson[0]}))
        
