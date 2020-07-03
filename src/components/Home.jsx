@@ -10,7 +10,7 @@ class Home extends React.Component {
    }
 
   componentDidMount=async()=> {
-    let response = await fetch('http://localhost:3002/media/')
+    let response = await fetch('https://natflix-be.herokuapp.com/media/')
     
     let data= await response.json()
     console.log('DATA',data)
