@@ -15,16 +15,17 @@ class Details extends Component {
     componentDidMount=()=>{
         console.log('mounted')
         let id=this.props.match.params.id
-        fetch( 'http://www.omdbapi.com/?i='+id+'&apikey=8ad00066')
+        console.log('id',id)
+        fetch('http://localhost:3002/media/'+id)
         .then((response)=>response.json())
-        .then((responseJson)=> this.setState({movie:responseJson}))
+        .then((responseJson)=> this.setState({movie:responseJson[0]}))
        
      
     }
     render() {
         return (
         <Container>
-            {console.log(this.state.movie)}
+            {console.log('this movie',this.state.movie)}
         
               {this.state.movie&&
                 <Row>
@@ -33,7 +34,7 @@ class Details extends Component {
               </Col>
               <Col xs={8}>
                <h1 style={{color:'white'}}>{this.state.movie.Title}</h1>
-               <h2>{this.state.movie.Plot}</h2>
+              
                <Comments id={this.state.movie.imdbID} />
               </Col>
               </Row>}

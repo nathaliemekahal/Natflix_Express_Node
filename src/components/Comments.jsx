@@ -24,18 +24,27 @@ class Comments extends Component {
   }
   sendReview=async()=>{
     let id = this.props.id
-    const commentsUrl = "https://striveschool.herokuapp.com/api/comments/";
+    const commentsUrl = "http://localhost:3002/reviews/"+id;
     let response = await fetch(commentsUrl,{
       method:'POST',
       body : JSON.stringify(this.state.review),
       headers : new Headers({
-        'Authorization': 'Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=',
+        // 'Authorization': 'Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=',
         'content-type': 'application/json'
       })
     })
     if(response.ok){
-      alert('Review submitted')
-      this.props.history.push('/')
+      this.setState({show:false})
+      const commentsUrl = "http://localhost:3002/reviews/";
+      let response = await fetch(commentsUrl + id,{
+        method:'GET',
+        // headers : new Headers({
+        //   'Authorization':'Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU='
+        // })
+      })
+      let comments = await response.json()
+      console.log('comments',comments)
+      this.setState({comments})
     }
   }
   updateReview =(e)=>{
@@ -54,12 +63,12 @@ class Comments extends Component {
   componentDidMount=async() =>{
     let id = this.props.id
     console.log('id changing',id)
-    const commentsUrl = "https://striveschool.herokuapp.com/api/comments/";
+    const commentsUrl = "http://localhost:3002/reviews/";
     let response = await fetch(commentsUrl + id,{
       method:'GET',
-      headers : new Headers({
-        'Authorization':'Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU='
-      })
+      // headers : new Headers({
+      //   'Authorization':'Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU='
+      // })
     })
     let comments = await response.json()
     console.log('comments',comments)
